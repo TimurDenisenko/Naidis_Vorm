@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace Naidis_Vorm
 {
@@ -103,31 +105,26 @@ namespace Naidis_Vorm
             home.Size = new Size(100, 100);
             home.SizeMode = PictureBoxSizeMode.Zoom;
 
-            this.Controls.Add(tree);
-            this.Controls.Add(btn);
-            this.Controls.Add(lbl);
-            this.Controls.Add(txt_box);
-            this.Controls.Add(r1);
-            this.Controls.Add(r2);
-            this.Controls.Add(c1);
-            this.Controls.Add(c2);
-            this.Controls.Add(pb);
-            this.Controls.Add(pizza);
-            this.Controls.Add(home);
-            this.Controls.Add(btn1);
+            ControlsAdd(new object[] {tree},
+            btn,lbl,txt_box,r1,r2,c1,c2,pb,pizza,home,btn1 
+            );
+          
+        }
 
-            btn.Visible = false;
-            lbl.Visible = false;
-            txt_box.Visible = false;
-            r1.Visible = false;
-            r2.Visible = false;
-            c1.Visible = false; 
-            c2.Visible = false;
-            pb.Visible = false; 
-            pizza.Visible = false;
-            home.Visible = false;
-            btn1.Visible = false;
-
+        private void ControlsAdd([Optional] object[] arrayVisibleTrue, params object[] array)
+        {
+            if (arrayVisibleTrue != null)
+            {
+                foreach (Control item in arrayVisibleTrue)
+                {
+                    this.Controls.Add(item);
+                }
+            }
+            foreach (Control item in array)
+            {
+                    this.Controls.Add(item);      
+                    item.Visible = false;
+            }           
         }
 
         private void Btn1_Click(object? sender, EventArgs e)
