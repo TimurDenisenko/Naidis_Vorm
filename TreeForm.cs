@@ -107,8 +107,7 @@ namespace Naidis_Vorm
 
             ControlsAdd(new object[] {tree},
             btn,lbl,txt_box,r1,r2,c1,c2,pb,pizza,home,btn1 
-            );
-          
+            );         
         }
 
         private void ControlsAdd([Optional] object[] arrayVisibleTrue, params object[] array)
