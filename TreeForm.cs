@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,13 +13,15 @@ namespace Naidis_Vorm
     public partial class TreeForm : Form
     {
         TreeView tree;
-        Button btn,btn1;
+        Button btn,btn1,btn2;
         TreeNode tn = new TreeNode("Elemendid");
         Label lbl;
         TextBox txt_box;
         RadioButton r1, r2;
         CheckBox c1, c2;
         PictureBox pb,home,pizza;
+        ListBox lb;
+        DataGridView dgv;
 
         double i=0;
         public TreeForm()
@@ -43,9 +47,11 @@ namespace Naidis_Vorm
             tn.Nodes.Add("Silt-Label");
             lbl = new Label();
             lbl.Text = "Pealkiri";
-            lbl.Location = new Point(0,0);
-            lbl.BackColor = Color.Gray;
-            lbl.Size = new Size(this.Width,btn.Location.Y);
+            lbl.Location = new Point(0, tree.Bottom);
+            lbl.Size = new Size(this.Width, btn.Top-tree.Bottom);
+            lbl.BackColor= Color.LightGray;
+            lbl.BorderStyle= BorderStyle.Fixed3D;
+            lbl.Font = new Font("Tahoma", 24);
             tree.Nodes.Add(tn);
             //tekstkast
             tn.Nodes.Add(new TreeNode("Tekstkast-Textbox"));
@@ -94,23 +100,80 @@ namespace Naidis_Vorm
             pb.BorderStyle = BorderStyle.Fixed3D;
 
             pizza = new PictureBox();
-            pizza.Location = new Point(pb.Left, pb.Bottom+150);
+            pizza.Location = new Point(pb.Location.X,pb.Location.Y);
             pizza.Image = new Bitmap("../../../pizza.png");
             pizza.Size = new Size(100, 100);
             pizza.SizeMode = PictureBoxSizeMode.Zoom;
 
             home = new PictureBox();
-            home.Location = new Point(pizza.Left+100, pizza.Top);
+            home.Location = new Point(pb.Location.X, pb.Location.Y);
             home.Image = new Bitmap("../../../home.png");
             home.Size = new Size(100, 100);
             home.SizeMode = PictureBoxSizeMode.Zoom;
 
-            ControlsAdd(new object[] {tree},
-            btn,lbl,txt_box,r1,r2,c1,c2,pb,pizza,home,btn1 
-            );         
+            //Loetelu
+            tn.Nodes.Add(new TreeNode("Loetelu-Listbox"));
+            lb = new ListBox();
+            lb.Height = 20;
+            lb.Location = new Point(c1.Left-150,c1.Top);
+
+            btn2 = new Button();
+            btn2.Height = 50;
+            btn2.Width = lb.Width;
+            btn2.Text = "Lisa";
+            btn2.Location = new Point(lb.Left, lb.Bottom);
+            btn2.Click +=Btn2_Click;
+
+            lb.KeyDown+=Lb_KeyDown;
+
+            //Data 
+            tn.Nodes.Add(new TreeNode("DataGridView"));
+            DataSet ds = new DataSet("XML fail. Menüü");
+            ds.ReadXml(@"..\..\..\food.xml");
+            dgv = new DataGridView();
+            dgv.Location = new Point(0,pb.Bottom+70);
+            dgv.AutoSize = true;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.DataSource = ds;
+            dgv.AutoGenerateColumns = true;
+            dgv.DataMember = "food";
+
+            ControlsAdd(new Control[] {tree}, 
+            new Control[] { btn, lbl, txt_box, r1, r2, c1, c2, pb, pizza, home, btn1, lb, btn2, dgv });         
         }
 
-        private void ControlsAdd([Optional] object[] arrayVisibleTrue, params object[] array)
+        private void Lb_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (lb.SelectedItem!=null)
+                {
+                    lb.Items.Remove(lb.SelectedItem);
+                    if (lb.Items.Count<9)
+                    {
+                        lb.Height-=20;
+                        lb.Height+=20;
+                        btn2.Location =new Point(lb.Left, lb.Bottom);
+                    }
+                }
+            }
+        }
+
+        private void Btn2_Click(object? sender, EventArgs e)
+        {
+            string tekst = Interaction.InputBox("Lisa uus väli", "Pealkiri muutmine", "Väli");
+            if (tekst.Length>0 && !lb.Items.Contains(tekst))
+            {
+                lb.Items.Add(tekst);
+                if (lb.Height<=150)
+                {
+                    lb.Height+=20;
+                    btn2.Location =new Point(lb.Left, lb.Bottom);
+                }
+            }
+        }
+
+        private void ControlsAdd([Optional] Control[] arrayVisibleTrue, Control[] arrayVisibleFalse)
         {
             if (arrayVisibleTrue != null)
             {
@@ -119,7 +182,7 @@ namespace Naidis_Vorm
                     this.Controls.Add(item);
                 }
             }
-            foreach (Control item in array)
+            foreach (Control item in arrayVisibleFalse)
             {
                     this.Controls.Add(item);      
                     item.Visible = false;
@@ -162,21 +225,33 @@ namespace Naidis_Vorm
         {
             if (e.KeyCode == Keys.Enter)
             {
-                DialogResult result = MessageBox.Show("Kas sa oled kindel?","Küsimus",MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Kas sa oled kindel?", "Küsimus", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
                     if (txt_box.Text.ToLower() == "pizza")
                     {
+                        pb.Visible = false;
+                        home.Visible = false;
                         pizza.Visible = true;
                     }
                     else if (txt_box.Text.ToLower() == "home")
                     {
+                        pb.Visible = false;
+                        pizza.Visible = false;
                         home.Visible = true;
                     }
                     else
                     {
                         pizza.Visible = false;
                         home.Visible = false;
+                    }
+                }
+                else
+                {
+                    string tekst = Interaction.InputBox("Sisesta pealkiri", "Pealkiri muutmine", "Uus pealkiri");
+                    if (tekst.Length>0) 
+                    {
+                        this.Text = tekst;
                     }
                 }
             }
@@ -308,6 +383,30 @@ namespace Naidis_Vorm
                 else
                 {
                     pb.Visible = false;
+                }
+            }
+            else if (e.Node.Text == "Loetelu-Listbox")
+            {
+                if (lb.Visible == false)
+                {
+                    lb.Visible = true;
+                    btn2.Visible = true;
+                }
+                else
+                {
+                    lb.Visible = false;
+                    btn2.Visible = false;
+                }
+            }
+            else if (e.Node.Text == "DataGridView")
+            {
+                if (dgv.Visible == false)
+                {
+                    dgv.Visible = true;
+                }
+                else
+                {
+                    dgv.Visible = false;
                 }
             }
             tree.SelectedNode = null;
