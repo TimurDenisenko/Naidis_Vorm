@@ -22,6 +22,7 @@ namespace Naidis_Vorm
         PictureBox pb,home,pizza;
         ListBox lb;
         DataGridView dgv;
+        Kolmnurk kolmnurk;
 
         double i=0;
         public TreeForm()
@@ -137,6 +138,9 @@ namespace Naidis_Vorm
             dgv.DataSource = ds;
             dgv.AutoGenerateColumns = true;
             dgv.DataMember = "food";
+
+            //Kolmnurk vorm
+            tn.Nodes.Add(new TreeNode("Kolmnurk"));
 
             ControlsAdd(new Control[] {tree}, 
             new Control[] { btn, lbl, txt_box, r1, r2, c1, c2, pb, pizza, home, btn1, lb, btn2, dgv });         
@@ -305,10 +309,6 @@ namespace Naidis_Vorm
         {
             i+=1;
             btn.Text= "Click!\n"+i;
-            if (i==20)
-            {
-                Application.Restart();
-            }
         }
 
         private void Tree_AfterSelect(object? sender, TreeViewEventArgs e)
@@ -359,21 +359,6 @@ namespace Naidis_Vorm
                     r2.Visible = false;
                 }
             }
-            else if (e.Node.Text == "Valikkast-Checkbox")
-            {
-                if (c1.Visible == false)
-                {
-                    c1.Visible = true;
-                    c2.Visible = true;
-                    btn1.Visible = true;
-                }
-                else
-                {
-                    c1.Visible= false;
-                    c2.Visible= false;
-                    btn1.Visible = false;
-                }
-            }
             else if (e.Node.Text == "Pilt-Image")
             {
                 if (pb.Visible == false)
@@ -409,6 +394,26 @@ namespace Naidis_Vorm
                     dgv.Visible = false;
                 }
             }
+            else if (e.Node.Text == "Valikkast-Checkbox")
+            {
+                if (c1.Visible == false)
+                {
+                    c1.Visible = true;
+                    c2.Visible = true;
+                    btn1.Visible = true;
+                }
+                else
+                {
+                    c1.Visible = false;
+                    c2.Visible = false;
+                    btn1.Visible = false;
+                }
+            }
+            else if (e.Node.Text == "Kolmnurk")
+            {
+                  kolmnurk = new Kolmnurk();
+                  kolmnurk.Show();
+            }     
             tree.SelectedNode = null;
         }
 

@@ -1,17 +1,13 @@
 namespace Naidis_Vorm
 {
-    internal static class Program
+    public class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        public static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new TreeForm());
+            Triangle triangle = new Triangle (50,1,53);
+            Console.WriteLine(triangle.ExistTriangle);
+            Console.ReadLine();
+            //Application.Run(new TreeForm());
         }
     }
 }
