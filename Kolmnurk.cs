@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Naidis_Vorm
 {
@@ -7,6 +8,7 @@ namespace Naidis_Vorm
         Label lbl;
         PictureBox pb;
         Button btn;
+        ListBox lb;
         public Kolmnurk()
         {
             this.Height = 600;
@@ -35,7 +37,30 @@ namespace Naidis_Vorm
             btn.Font = lbl.Font = new Font("Tahoma", 20);
             btn.Location = new Point(pb.Left, pb.Top-150);
 
-            ControlsAdd(new Control[] {lbl, pb, btn});
+            lb = new ListBox();
+            lb.Height = 280;
+            
+            lb.Items.Add("Külg A: ");
+            lb.Items.Add("Külg B: ");
+            lb.Items.Add("Külg C: ");
+            lb.Items.Add("Olemas: ");
+            lb.Items.Add("Perimeeter: ");
+            lb.Items.Add("Ruut: ");
+            lb.Items.Add("Kõrgus A: ");
+            lb.Items.Add("Kõrgus B: ");
+            lb.Items.Add("Kõrgus C: ");
+            lb.Items.Add("Mediaan A: ");
+            lb.Items.Add("Mediaan B: ");
+            lb.Items.Add("Mediaan C: ");
+            lb.Items.Add("Nurk alpha: ");
+            lb.Items.Add("Nurk beta: ");
+            lb.Items.Add("Nurk gamma: ");
+            lb.Items.Add("Poolitaja AB: ");
+            lb.Items.Add("Poolitaja BC: ");
+            lb.Items.Add("Poolitaja CA: ");
+            lb.Location = new Point(50,lbl.Bottom+50);
+
+            ControlsAdd(new Control[] {lbl, pb, btn, lb});
         }
 
         private void ControlsAdd(Control[] arrayVisibleTrue)
