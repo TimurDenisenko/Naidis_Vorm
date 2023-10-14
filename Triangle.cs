@@ -26,6 +26,7 @@ namespace Naidis_Vorm
             this.A = a;
             this.B = a;
             this.C = a;
+            On = ExistTriangle;
         }
 
         public void SetA(double a) { this.A = a; On = ExistTriangle; }
@@ -82,7 +83,7 @@ namespace Naidis_Vorm
                 {
                     return 0;
                 }
-                return (1 / 2) * Math.Sqrt(2 * (side1*side1 + side2*side2) - side*side);
+                return 0.5 * Math.Sqrt(2 * (side1 * side1 + side2 * side2) - side * side);
             }
             else
                 return 0;
@@ -122,49 +123,48 @@ namespace Naidis_Vorm
         //Nurk
         public double Bisector(string side)
         {
-            double side1, side2;
+            double side1, side2, side3;
             if (On)
             {
-                double angle;
                 switch (side)
                 {
                     case "AB":
-                        angle = Angle("gamma");
                         side1 = A;
                         side2 = B;
+                        side3 = C;
                         break;
                     case "BC":
-                        angle = Angle("alpha");
                         side1 = B;
                         side2 = C;
+                        side3 = A;
                         break;
                     case "CA":
-                        angle = Angle("beta");
                         side1 = C;
                         side2 = A;
+                        side3 = B;
                         break;
                     default:
                         return 0;
                 }
-                return 2*side1*side2/(side1+side2)*Math.Cos(angle/2);
+                return Math.Sqrt(side1*side2*(side1+side2+side3)*(side1+side2-side3))/(side1+side2);
             }
             else
                 return 0;
         }
         //Poolitaja
-        public double[] All()
+        public List<double> All()
         {
-            double[] all = new double[] { };
+            List<double> all = new List<double> { };
             if (On)
             {
-                foreach (double item in new double[] {Perimeter(), Surface(), Height(A), Height(B), Height(B), Median(A), Median(B), Median(B), Angle("alpha"), Angle("beta"), Angle("gamma"), Bisector("AB"), Bisector("BC"), Bisector("CB")})
+                foreach (double item in new double[] {A, B, C, Perimeter(), Surface(), Height(A), Height(B), Height(B), Median(A), Median(B), Median(B), Angle("alpha"), Angle("beta"), Angle("gamma"), Bisector("AB"), Bisector("BC"), Bisector("CA")})
                 {
-                    all.Append(item);
+                    all.Add(Math.Round(item,2));
                 }
                 return all;
             }
             else
-                return new double[] {0};
+                return new List<double> {0};
         }
 
         public bool ExistTriangle
