@@ -12,6 +12,7 @@ namespace Naidis_Vorm
         public double B { get; private set; }
         public double C { get; private set; }
         public bool On = false;
+        public double H { get; private set; }
 
         public Triangle(double a, double b, double c)
         {
@@ -27,6 +28,12 @@ namespace Naidis_Vorm
             this.B = a;
             this.C = a;
             On = ExistTriangle;
+        }
+
+        public Triangle(double a, double h)
+        {
+            this.A = a;
+            this.H = h;
         }
 
         public void SetA(double a) { this.A = a; On = ExistTriangle; }
@@ -45,6 +52,10 @@ namespace Naidis_Vorm
         {
             if (On)
             {
+                if (H!=0)
+                {
+                    return 0.5 * A * H;
+                }
                 double p = (A + B + C) / 2;
                 return Math.Sqrt(p * (p - A) * (p - B) * (p - C));
             }
@@ -150,6 +161,48 @@ namespace Naidis_Vorm
             }
             else
                 return 0;
+        }
+        public string TypeAngle()
+        {
+            if (On)
+            {
+                if (Angle("alpha")<90 && Angle("beta")<90 && Angle("gamma")<90)
+                {
+                    return "Teravnurkne";
+                }
+                else if (Angle("alpha")>90 || Angle("beta")>90 || Angle("gamma")>90)
+                {
+                    return "Nüri";
+                }
+                else if (Angle("alpha")==90 || Angle("beta")==90 || Angle("gamma")==90)
+                {
+                    return "Täisnurkne";
+                }
+                return "";
+            }
+            else
+                return "";
+        }
+        public string TypeSide()
+        {
+            if (On)
+            {
+                if (A==B && A==C)
+                {
+                    return "Võrdkülgsed";
+                }
+                else if (A==B || A==C || B==C)
+                {
+                    return "Võrdhaarsed";
+                }
+                else if (A!=B && A!=C && B!=C)
+                {
+                    return "Mitmekülgne";
+                }
+                return "";
+            }
+            else
+                return "";
         }
         //Poolitaja
         public List<double> All()

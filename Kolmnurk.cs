@@ -5,11 +5,11 @@ namespace Naidis_Vorm
 {
     public partial class Kolmnurk: Form
     {
-        Label lbl, lbl1, lbl2, lbl3;
+        Label lbl, lbl1, lbl2, lbl3, lbl4;
         PictureBox pb;
         Button btn;
         ListBox lb, lb1;
-        TextBox tb1, tb2, tb3;
+        TextBox tb1, tb2, tb3, tb4;
         int j = 0;
 
         public Kolmnurk()
@@ -42,7 +42,7 @@ namespace Naidis_Vorm
             btn.Click += Btn_Click;
 
             lb = new ListBox();
-            lb.Height = 280;
+            lb.Height = 310;
             lb.Width = 200;        
             lb.Items.Add("Külg A: ");
             lb.Items.Add("Külg B: ");
@@ -62,6 +62,8 @@ namespace Naidis_Vorm
             lb.Items.Add("Poolitaja AB: ");
             lb.Items.Add("Poolitaja BC: ");
             lb.Items.Add("Poolitaja CA: ");
+            lb.Items.Add("Nurga tüüp: ");
+            lb.Items.Add("Külje tüüp: ");
             lb.Location = new Point(50,lbl.Bottom+50);
 
             lb1 = new ListBox();
@@ -83,6 +85,9 @@ namespace Naidis_Vorm
             lbl3 = new Label();
             lbl3.Text = "Külg C:";
             lbl3.Location = new Point(lb.Left, lb.Bottom + 75);
+            lbl4 = new Label();
+            lbl4.Text = "Height:";
+            lbl4.Location = new Point(lb.Left, lb.Bottom + 75);
 
             tb1 = new TextBox();
             tb2 = new TextBox();
@@ -160,6 +165,8 @@ namespace Naidis_Vorm
                         lb.Items[i] = string.Format(option, lb.Items[i], all[i-1]);
                     }
                 }
+                lb.Items[18] = string.Format(option, lb.Items[18], triangle.TypeAngle());
+                lb.Items[19] = string.Format(option, lb.Items[19], triangle.TypeSide());
             }
             catch (Exception)
             {
