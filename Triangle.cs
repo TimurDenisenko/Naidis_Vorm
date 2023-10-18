@@ -61,6 +61,10 @@ namespace Naidis_Vorm
             }
             else return 0;
         }
+        public double SurfaceWithOutOn()
+        {
+            return 0.5 * A * H;
+        }
         //Ruut
         public double Height(double side)
         {
