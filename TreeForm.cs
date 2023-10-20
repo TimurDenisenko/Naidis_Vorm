@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.Design.AxImporter;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 
 namespace Naidis_Vorm
 {
@@ -30,6 +32,9 @@ namespace Naidis_Vorm
             this.Height = 600;
             this.Width = 800;
             this.Text = "Vorm põhielementidega";
+
+            this.Paint += new PaintEventHandler(set_background);
+
             tree = new TreeView();
             tree.Dock = DockStyle.Top;
             tree.BorderStyle = BorderStyle.Fixed3D;
@@ -88,7 +93,7 @@ namespace Naidis_Vorm
             btn1.Height = 50;
             btn1.Width = 100;
             btn1.Text = "Teadma";
-            btn1.Location = new Point(c2.Left-20, c2.Bottom);
+            btn1.Location = new Point(c2.Left, c2.Bottom);
             btn1.Click += Btn1_Click;
 
             //Image
@@ -433,6 +438,14 @@ namespace Naidis_Vorm
             {
                 btn.BackColor= Color.Red;
             }
+        }
+
+        private void set_background(Object sender, PaintEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            Rectangle gradient_rectangle = new Rectangle(0, 0, Width, Height);
+            Brush b = new LinearGradientBrush(gradient_rectangle, Color.FromArgb(0, 0, 0), Color.FromArgb(255, 255, 255), 65f);
+            graphics.FillRectangle(b, gradient_rectangle);
         }
     }
 }
