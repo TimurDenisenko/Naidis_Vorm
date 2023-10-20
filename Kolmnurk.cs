@@ -59,7 +59,7 @@ namespace Naidis_Vorm
             lb.Items.Add("Külg C: ");
             lb.Items.Add("Olemas: ");
             lb.Items.Add("Perimeeter: ");
-            lb.Items.Add("Ruut: ");
+            lb.Items.Add("Pindala: ");
             lb.Items.Add("Kõrgus A: ");
             lb.Items.Add("Kõrgus B: ");
             lb.Items.Add("Kõrgus C: ");

@@ -40,7 +40,7 @@ namespace Naidis_Vorm
             lb.Location = new Point(50, lbl.Bottom+50);
             lb.Items.Add("Külg: ");
             lb.Items.Add("Kõrgus: ");
-            lb.Items.Add("Ruut: ");
+            lb.Items.Add("Pindala: ");
 
             lb1 = new ListBox();
             if (j == 0)
