@@ -52,10 +52,6 @@ namespace Naidis_Vorm
         {
             if (On)
             {
-                if (H!=0)
-                {
-                    return 0.5 * A * H;
-                }
                 double p = (A + B + C) / 2;
                 return Math.Sqrt(p * (p - A) * (p - B) * (p - C));
             }

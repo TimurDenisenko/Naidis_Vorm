@@ -153,7 +153,7 @@ namespace Naidis_Vorm
                 if (lb.SelectedItem!=null)
                 {
                     lb.Items.Remove(lb.SelectedItem);
-                    if (lb.Items.Count<9)
+                    if (lb.Items.Count<7)
                     {
                         lb.Height-=20;
                         lb.Height+=20;
@@ -169,7 +169,7 @@ namespace Naidis_Vorm
             if (tekst.Length>0 && !lb.Items.Contains(tekst))
             {
                 lb.Items.Add(tekst);
-                if (lb.Height<=150)
+                if (lb.Height<=100)
                 {
                     lb.Height+=20;
                     btn2.Location =new Point(lb.Left, lb.Bottom);
